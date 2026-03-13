@@ -1,0 +1,87 @@
+/* Custom styling for ReactQuill in Dark Mode */
+.quill {
+    border-radius: 2.5rem !important;
+    background-color: transparent !important;
+    border: none !important;
+    overflow: hidden;
+    color: white;
+}
+
+.ql-toolbar.ql-snow {
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03) !important;
+    padding: 1.5rem 2rem !important;
+    background: transparent !important;
+}
+
+.ql-container.ql-snow {
+    border: none !important;
+    font-family: 'Charter', 'Georgia', serif !important;
+    font-size: 1.25rem !important;
+    min-height: 500px;
+}
+
+.ql-editor {
+    padding: 3rem 2rem !important;
+    line-height: 1.8 !important;
+    color: #e2e2e2;
+}
+
+.ql-editor.ql-blank::before {
+    color: #333 !important;
+    font-style: italic !important;
+    left: 2rem !important;
+    font-size: 1.5rem;
+}
+
+/* Toolbar Buttons */
+.ql-snow .ql-stroke {
+    stroke: #555 !important;
+    transition: all 0.3s ease;
+}
+
+.ql-snow .ql-fill {
+    fill: #555 !important;
+    transition: all 0.3s ease;
+}
+
+.ql-snow .ql-picker {
+    color: #555 !important;
+    transition: all 0.3s ease;
+}
+
+.ql-snow .ql-stroke:hover, 
+.ql-snow .ql-fill:hover,
+.ql-snow.ql-toolbar button:hover .ql-stroke,
+.ql-snow.ql-toolbar button:hover .ql-fill,
+.ql-snow.ql-toolbar button.ql-active .ql-stroke,
+.ql-snow.ql-toolbar button.ql-active .ql-fill {
+    stroke: #FF6719 !important;
+    color: #FF6719 !important;
+}
+
+.ql-snow .ql-picker-options {
+    background-color: #1C1C1C !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    border-radius: 1rem;
+    padding: 0.5rem !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+.ql-snow .ql-picker-item:hover {
+    color: #FF6719 !important;
+}
+
+.premium-editor .ql-editor blockquote {
+    border-left: 4px solid #FF6719 !important;
+    padding-left: 2rem !important;
+    font-style: italic;
+    color: #888;
+}
+
+.premium-editor .ql-editor pre.ql-syntax {
+    background-color: #0d0d0d !important;
+    border-radius: 1.5rem !important;
+    padding: 2rem !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
