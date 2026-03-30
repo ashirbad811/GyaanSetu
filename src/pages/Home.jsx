@@ -43,17 +43,17 @@ const Home = () => {
     }, [search, tag, page]);
 
     return (
-        <div className="flex flex-col xl:flex-row gap-10 xl:gap-16 justify-center min-h-screen p-6 sm:p-10 max-w-[1400px] mx-auto">
+        <div className="flex flex-col xl:flex-row gap-8 xl:gap-12 justify-center min-h-screen p-6 sm:p-10 max-w-[1400px] mx-auto">
             {/* Left Column: Feed */}
             <div className="flex-grow max-w-[680px] w-full">
-                <header className="mb-12">
+                <header className="mb-8">
                     <form action="/" method="GET" className="relative group">
                         <div className="absolute inset-0 bg-substack-orange/5 blur-2xl opacity-0 group-focus-within:opacity-100 transition-opacity duration-500 rounded-2xl" />
                         <input
                             type="text"
                             name="search"
                             defaultValue={search}
-                            className="relative w-full bg-[#141414]/80 backdrop-blur-xl text-white px-14 py-4.5 rounded-2xl border border-white/[0.05] focus:outline-none focus:border-substack-orange/40 focus:bg-[#1A1A1A] transition-all font-sans placeholder:text-gray-600 shadow-2xl"
+                            className="relative w-full bg-[#141414]/80 backdrop-blur-xl text-white px-12 py-3.5 rounded-2xl border border-white/[0.05] focus:outline-none focus:border-substack-orange/40 focus:bg-[#1A1A1A] transition-all font-sans placeholder:text-gray-600 shadow-2xl"
                             placeholder="Search stories, writers, or tags..."
                         />
                         <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-600 group-focus-within:text-substack-orange transition-colors" />
@@ -116,7 +116,7 @@ const Home = () => {
             </div>
 
             {/* Right Column: Widgets */}
-            <div className="hidden xl:block w-80 xl:w-96 space-y-10 sticky top-10 h-fit">
+            <div className="hidden xl:block w-80 xl:w-96 space-y-8 sticky top-10 h-fit">
                 {!user && (
                     <div className="relative overflow-hidden bg-[#141414]/60 backdrop-blur-2xl border border-white/[0.05] rounded-[2.5rem] p-8 text-center shadow-2xl group">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-substack-orange/5 blur-3xl -mr-16 -mt-16 group-hover:bg-substack-orange/10 transition-all duration-700" />
@@ -126,8 +126,8 @@ const Home = () => {
                         <h3 className="text-2xl font-bold mb-3 font-serif tracking-tight">The Modern Stack</h3>
                         <p className="text-gray-500 text-sm mb-8 font-serif leading-relaxed italic">Join a community of thousands for deep insights and daily updates.</p>
                         <div className="space-y-4">
-                            <Link to="/register" className="btn-substack w-full !py-4 shadow-xl">Get Your Access</Link>
-                            <Link to="/login" className="btn-secondary w-full !py-4">Sign In</Link>
+                            <Link to="/register" className="btn-substack w-full !py-3 shadow-xl">Get Your Access</Link>
+                            <Link to="/login" className="btn-secondary w-full !py-3">Sign In</Link>
                         </div>
                     </div>
                 )}
@@ -137,14 +137,14 @@ const Home = () => {
                         <div className="w-2 h-2 rounded-full bg-substack-orange shadow-[0_0_8px_rgba(255,103,25,0.6)]"></div>
                         Trending Stories
                     </h3>
-                    <div className="space-y-8">
+                    <div className="space-y-6">
                         {upNext.map(recPost => (
                             <Link key={recPost.id} to={`/post/${recPost.slug}`} className="flex gap-5 group/item">
                                 <div className="flex-grow">
                                     <h4 className="text-[15px] font-bold leading-tight group-hover/item:text-substack-orange transition-colors line-clamp-2 tracking-tight">
                                         {recPost.title}
                                     </h4>
-                                    <div className="flex items-center gap-2 mt-2">
+                                    <div className="flex items-center gap-2 mt-1">
                                         <span className="text-[9px] text-gray-500 font-bold uppercase tracking-widest">
                                             {recPost.author?.name}
                                         </span>

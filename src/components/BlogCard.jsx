@@ -7,6 +7,19 @@ import api from '../services/api';
 import Swal from 'sweetalert2';
 import ShareModal from './ShareModal';
 
+const stripHtml = (html) => {
+    if (!html) return "";
+    return html
+        .replace(/<[^>]*>?/gm, '')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&amp;/g, '&')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .trim();
+};
+
 const BlogCard = ({ post }) => {
     const { user, isFollowing, follow, unfollow } = useAuth();
     const [followLoading, setFollowLoading] = useState(false);
@@ -166,14 +179,14 @@ const BlogCard = ({ post }) => {
     const reactions = ['👍', '❤️', '😊', '🤔', '🔥', '👏'];
 
     return (
-        <div className="max-w-[720px] w-full mx-auto group/card relative bg-[#141414]/40 backdrop-blur-2xl border border-white/[0.03] rounded-[2rem] p-5 sm:p-8 mb-8 hover:bg-[#1A1A1A]/60 transition-all duration-700 overflow-hidden shadow-2xl hover:shadow-orange-500/[0.02] hover:-translate-y-1.5 hover:border-white/[0.08]">
+        <div className="max-w-[720px] w-full mx-auto group/card relative bg-[#141414]/40 backdrop-blur-2xl  p-5 sm:p-8 mb-8 transition-all duration-700 overflow-hidden ">
             {/* Background Glow */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-substack-orange/[0.02] blur-[100px] -mr-32 -mt-32 group-hover/card:bg-substack-orange/[0.05] transition-all duration-1000" />
             
             {/* Header: Author Info */}
-            <div className="relative flex items-center justify-between mb-8">
+            <div className="relative flex items-center justify-between mb-5">
                 <div className="flex items-center gap-4">
-                    <Link to={`/profile/${authorId}`} className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1F1F1F] to-[#0A0A0A] flex items-center justify-center text-substack-orange border border-white/[0.05] overflow-hidden shadow-xl group-hover/card:scale-105 transition-transform duration-500">
+                    <Link to={`/profile/${authorId}`} className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-[#1F1F1F] to-[#0A0A0A] flex items-center justify-center text-substack-orange border border-white/[0.05] overflow-hidden group-hover/card:scale-105 transition-transform duration-500">
                         {post.author?.avatar && post.author.avatar !== "" ? (
                             <img src={post.author.avatar.startsWith('http') ? post.author.avatar : `http://localhost:5000${post.author.avatar}`} alt={post.author.name} className="w-full h-full object-cover" />
                         ) : (
@@ -192,7 +205,7 @@ const BlogCard = ({ post }) => {
                         {tags.length > 0 && (
                             <div className="flex gap-2 mt-1.5">
                                 {tags.slice(0, 2).map((tag, idx) => (
-                                    <span key={idx} className="text-[9px] text-substack-orange/80 font-bold uppercase tracking-widest bg-substack-orange/5 px-2.5 py-1 rounded-lg border border-substack-orange/10">
+                                    <span key={idx} className="text-[9px] text-substack-orange/80 font-bold uppercase tracking-widest bg-substack-orange/5 px-3 py-1 rounded-lg border border-substack-orange/10">
                                         {tag}
                                     </span>
                                 ))}
@@ -205,7 +218,7 @@ const BlogCard = ({ post }) => {
                         <button 
                             onClick={handleFollow}
                             disabled={followLoading}
-                            className={`text-[10px] font-bold uppercase tracking-widest transition-all py-2.5 px-5 rounded-xl border flex items-center gap-2 shadow-lg ${isFollowing(authorId) ? 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10 hover:text-white' : 'bg-substack-orange text-white border-transparent hover:bg-white hover:text-black shadow-orange-500/10'}`}
+                            className={`text-[10px] font-bold uppercase tracking-widest transition-all py-2 px-4 rounded-xl border flex items-center gap-2 ${isFollowing(authorId) ? 'bg-white/5 text-gray-500 border-white/5 hover:bg-white/10 hover:text-white' : 'bg-substack-orange text-white border-transparent hover:bg-white hover:text-black'}`}
                         >
                             {followLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : (isFollowing(authorId) ? 'Following' : 'Follow')}
                         </button>
@@ -223,7 +236,7 @@ const BlogCard = ({ post }) => {
                         </button>
 
                         {showMore && (
-                            <div className="absolute right-0 mt-2 w-56 bg-[#1A1A1A] border border-white/[0.08] backdrop-blur-2xl rounded-2xl p-2 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                            <div className="absolute right-0 mt-2 w-56 bg-[#1A1A1A] border border-white/[0.08] backdrop-blur-2xl rounded-2xl p-2 z-50 animate-in fade-in zoom-in-95 duration-200">
                                 <button
                                     onClick={handleReport}
                                     className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-400 hover:text-red-500 hover:bg-red-500/5 transition-all rounded-xl"
@@ -247,7 +260,7 @@ const BlogCard = ({ post }) => {
             </div>
 
             {/* Content Body */}
-            <Link to={`/post/${post.slug}`} className="relative block group mb-8">
+            <Link to={`/post/${post.slug}`} className="relative block group mb-4">
                 {post.type === 'article' && post.title && (
                     <div className="mb-4">
                         <h2 className={`text-2xl sm:text-3xl font-bold text-white font-serif leading-[1.2] group-hover:text-substack-orange/90 transition-all duration-300 tracking-tight break-words ${!post.subtitle ? 'line-clamp-2' : ''}`}>
@@ -256,7 +269,7 @@ const BlogCard = ({ post }) => {
                         {post.subtitle ? (
                             <p className="text-gray-500 font-serif italic text-base sm:text-lg mt-3 leading-relaxed line-clamp-2 opacity-80 break-words">{post.subtitle}</p>
                         ) : (
-                            <div className="flex items-center gap-2 mt-3 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0 duration-500">
+                            <div className="flex items-center gap-2 mt-3 transition-all duration-500">
                                 <span className="text-substack-orange text-[10px] font-bold uppercase tracking-[0.2em]">Read Article</span>
                                 <ArrowRight className="w-3.5 h-3.5 text-substack-orange" />
                             </div>
@@ -266,13 +279,13 @@ const BlogCard = ({ post }) => {
                 <p className={`text-gray-400 font-serif leading-relaxed line-clamp-3 selection:bg-substack-orange/20 break-words ${
                     post.type === 'note' ? 'text-xl sm:text-2xl italic text-gray-200 leading-snug' : 'text-[15px] sm:text-[17px]'
                 }`}>
-                    {post.content.replace(/<[^>]*>?/gm, '').substring(0, 260)}...
+                    {stripHtml(post.content).substring(0, 260)}...
                 </p>
             </Link>
 
             {/* Main Media */}
             {mainImage && mainImage !== "" && (
-                <Link to={`/post/${post.slug}`} className="block mb-8 rounded-3xl overflow-hidden border border-white/[0.03] shadow-2xl relative group/img aspect-[21/9] sm:aspect-[21/10] bg-[#0A0A0A] max-h-[200px] sm:max-h-[300px] md:max-h-[350px]">
+                <Link to={`/post/${post.slug}`} className="block mb-6 rounded-3xl overflow-hidden border border-white/[0.03] relative group/img aspect-[21/9] sm:aspect-[21/10] bg-[#0A0A0A] max-h-[200px] sm:max-h-[300px] md:max-h-[350px]">
                     <img 
                         src={mainImage.startsWith('http') || mainImage.startsWith('data:') ? mainImage : `http://localhost:5000${mainImage}`} 
                         alt={post.title} 
@@ -283,7 +296,7 @@ const BlogCard = ({ post }) => {
             )}
 
             {/* Footer: Interactions */}
-            <div className="relative flex items-center justify-between pt-8 border-t border-white/[0.05]">
+            <div className="relative flex items-center justify-between pt-5 border-t border-white/[0.05]">
                 <div className="flex flex-wrap items-center gap-1 sm:gap-4 md:gap-6">
                     <div 
                         className="relative group/like-container"
@@ -292,7 +305,7 @@ const BlogCard = ({ post }) => {
                     >
                         {showReactions && (
                             <div className="absolute bottom-full left-0 z-50 pb-3">
-                                <div className="bg-[#1A1A1A] border border-white/[0.08] backdrop-blur-2xl rounded-2xl p-2 flex gap-2 shadow-2xl animate-in fade-in slide-in-from-bottom-2 duration-300">
+                                <div className="bg-[#1A1A1A] border border-white/[0.08] backdrop-blur-2xl rounded-2xl p-2 flex gap-2 animate-in fade-in slide-in-from-bottom-2 duration-300">
                                     {reactions.map((emoji, i) => (
                                         <button
                                             key={i}

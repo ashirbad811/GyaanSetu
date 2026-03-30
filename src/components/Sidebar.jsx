@@ -46,7 +46,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 isOpen ? 'translate-x-0' : '-translate-x-full xl:translate-x-0'
             }`}>
             <div className="p-8">
-                <Link to="/" className="flex items-center gap-3 mb-12 group">
+                <Link to="/" className="flex items-center gap-3 mb-8 group">
                     <div className="w-10 h-10 bg-substack-orange rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(255,103,25,0.3)] group-hover:scale-110 transition-transform duration-500">
                         <Layout className="text-white w-6 h-6 fill-current" />
                     </div>
@@ -118,7 +118,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                     <div className="space-y-3">
                         <Link 
                             to="/create-blog"
-                            className="btn-substack w-full !py-3.5 shadow-lg"
+                            className="btn-substack w-full !py-3 shadow-lg"
                         >
                             <PlusCircle className="w-5 h-5" />
                             <span>New Post</span>
@@ -136,7 +136,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 {!user && (
                     <Link 
                         to="/login"
-                        className="btn-substack w-full !py-3.5"
+                        className="btn-substack w-full !py-3"
                     >
                         <span>Get Started</span>
                     </Link>
